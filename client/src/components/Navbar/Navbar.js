@@ -4,16 +4,14 @@ import "./Navbar.css";
 
 function Navbar() {
   return (
-    <nav
-      className="navbar is-light"
-      role="navigation"
-      aria-label="main navigation"
-    >
+    <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand">
-          <h1 className="title is-4 level book-logo">
-            <i className="fas fa-book-reader"></i> &nbsp;&nbsp;BOOK SEARCH
-          </h1>
+          <Link to="/" className="navbar-item">
+            <h1 className="title is-4 level" id="book-logo">
+              <i className="fas fa-book-reader"></i> &nbsp;&nbsp;BOOK SEARCH
+            </h1>
+          </Link>
         </div>
         <div className="navbar-menu is-active">
           <div className="navbar-end">
