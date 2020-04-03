@@ -1,9 +1,13 @@
 import React from "react";
 
+import Section from "../../components/Section/Section";
+
 function Search() {
   return (
     <>
-      <h1 className="title is-1">Search Page</h1>
+      <Section sectionTitle="Search Books">
+        <h1>form goes here</h1>
+      </Section>
     </>
   );
 }

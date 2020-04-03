@@ -1,0 +1,5 @@
+.section-border {
+  border: 1px solid hsl(0, 0%, 96%);
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
