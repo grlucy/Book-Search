@@ -4,7 +4,7 @@ import Navbar from "../Navbar/Navbar";
 function Header() {
   return (
     <>
-      <section className="hero is-light is-bold">
+      <section className="hero is-light">
         <div className="hero-head">
           <Navbar />
         </div>
