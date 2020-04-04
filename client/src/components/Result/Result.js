@@ -19,7 +19,13 @@ function Result(props) {
             <p>
               <strong>{props.title}</strong>
               <br />
-              Written by: {props.authors}
+              Written by:{" "}
+              {props.authors.map((author) => (
+                <span key={author}>
+                  <br />
+                  {author}
+                </span>
+              ))}
               <br />
               <br />
               {props.description}
