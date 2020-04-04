@@ -6,11 +6,12 @@ import SearchForm from "../../components/SearchForm/SearchForm";
 import Result from "../../components/Result/Result";
 
 function Search() {
-  const [search, setSearch] = useState("Harry Potter");
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    if (!search) {
+    if (!search.trim()) {
       return;
     }
     API.searchBook(search)
@@ -23,31 +24,44 @@ function Search() {
       .catch((err) => console.log(err));
   }, [search]);
 
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  const handleClick = (event) => {
+    setSearch(inputValue);
+  };
 
   return (
     <>
-      <Section sectionTitle="Search Books" padClass="topPad">
-        <SearchForm />
+      <Section
+        sectionTitle="Search Books"
+        padClass={results.length === 0 ? "allPad" : "topPad"}
+      >
+        <SearchForm
+          handleInputChange={handleInputChange}
+          handleClick={handleClick}
+        />
       </Section>
-      <Section sectionTitle="Results" padClass="botPad">
-        {results.map((result) => (
-          <Result
-            key={result.id}
-            title={result.volumeInfo.title}
-            authors={result.volumeInfo.authors}
-            description={result.volumeInfo.description}
-            link={result.volumeInfo.infoLink}
-            coverImage={
-              result.volumeInfo.imageLinks === undefined
-                ? "https://via.placeholder.com/64x64.png?text=No+Image+Found"
-                : result.volumeInfo.imageLinks.thumbnail
-            }
-          />
-        ))}
-      </Section>
+      {results.length === 0 ? (
+        <></>
+      ) : (
+        <Section sectionTitle="Results" padClass="botPad">
+          {results.map((result) => (
+            <Result
+              key={result.id}
+              title={result.volumeInfo.title}
+              authors={result.volumeInfo.authors}
+              description={result.volumeInfo.description}
+              link={result.volumeInfo.infoLink}
+              coverImage={
+                result.volumeInfo.imageLinks === undefined
+                  ? "https://via.placeholder.com/64x64.png?text=No+Image+Found"
+                  : result.volumeInfo.imageLinks.thumbnail
+              }
+            />
+          ))}
+        </Section>
+      )}
     </>
   );
 }
