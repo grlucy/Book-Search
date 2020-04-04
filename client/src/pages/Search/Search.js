@@ -17,6 +17,7 @@ function Search() {
     API.searchBook(search)
       .then((res) => {
         if (res.data.totalItems === 0) {
+          setResults([]);
           throw new Error("No results found.");
         }
         setResults(res.data.items);
