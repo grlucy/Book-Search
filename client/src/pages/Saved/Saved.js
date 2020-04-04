@@ -1,9 +1,15 @@
 import React from "react";
+import Section from "../../components/Section/Section";
+import Result from "../../components/Result/Result";
 
 function Saved() {
   return (
     <>
-      <h1 className="title is-1">Saved Page</h1>
+      <Section sectionTitle="Saved Books">
+        <Result />
+        <Result />
+        <Result />
+      </Section>
     </>
   );
 }

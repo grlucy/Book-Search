@@ -2,6 +2,7 @@ import React from "react";
 
 import Section from "../../components/Section/Section";
 import SearchForm from "../../components/SearchForm/SearchForm";
+import Result from "../../components/Result/Result";
 
 function Search() {
   return (
@@ -10,7 +11,9 @@ function Search() {
         <SearchForm />
       </Section>
       <Section sectionTitle="Results" padClass="botPad">
-        <p>Results here</p>
+        <Result />
+        <Result />
+        <Result />
       </Section>
     </>
   );
