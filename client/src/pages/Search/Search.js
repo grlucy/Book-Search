@@ -7,24 +7,25 @@ import Result from "../../components/Result/Result";
 
 function Search() {
   const [search, setSearch] = useState("Harry Potter");
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     if (!search) {
       return;
     }
-
     API.searchBook(search)
       .then((res) => {
-        // if (res.data.length === 0) {
-        //   throw new Error("No results found.");
-        // }
-        // if (res.data.status === "error") {
-        //   throw new Error(res.data.message);
-        // }
-        console.log(res.data);
+        if (res.data.totalItems === 0) {
+          throw new Error("No results found.");
+        }
+        setResults(res.data.items);
       })
       .catch((err) => console.log(err));
   }, [search]);
+
+  useEffect(() => {
+    console.log(results);
+  }, [results]);
 
   return (
     <>
@@ -32,9 +33,20 @@ function Search() {
         <SearchForm />
       </Section>
       <Section sectionTitle="Results" padClass="botPad">
-        <Result />
-        <Result />
-        <Result />
+        {results.map((result) => (
+          <Result
+            key={result.id}
+            title={result.volumeInfo.title}
+            authors={result.volumeInfo.authors}
+            description={result.volumeInfo.description}
+            link={result.volumeInfo.infoLink}
+            coverImage={
+              result.volumeInfo.imageLinks === undefined
+                ? "https://via.placeholder.com/64x64.png?text=No+Image+Found"
+                : result.volumeInfo.imageLinks.thumbnail
+            }
+          />
+        ))}
       </Section>
     </>
   );
