@@ -38,17 +38,17 @@ function Result() {
             rel="noopener noreferrer"
           >
             <button className="button view-btn has-text-white marg-bot">
-              <i class="fas fa-eye"></i>
+              <i className="fas fa-eye"></i>
             </button>
           </a>
           <br />
           {location.pathname === "/" ? (
             <button className="button save-btn is-light">
-              <i class="fas fa-heart"></i>
+              <i className="fas fa-heart"></i>
             </button>
           ) : (
             <button className="button delete-btn is-light">
-              <i class="fas fa-times"></i>
+              <i className="fas fa-times"></i>
             </button>
           )}
         </div>
