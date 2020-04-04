@@ -3,3 +3,10 @@
   border-radius: 0.5rem;
   padding: 2rem;
 }
+
+.topPad {
+  padding-bottom: 1rem;
+}
+.botPad {
+  padding-top: 1rem;
+}
