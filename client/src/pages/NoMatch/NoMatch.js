@@ -1,9 +1,10 @@
 import React from "react";
+import Section from "../../components/Section/Section";
 
 function NoMatch() {
   return (
     <>
-      <h1 className="title is-1">No Match Found</h1>
+      <Section sectionTitle="Error: Page Not Found" padClass="allPad" />
     </>
   );
 }
