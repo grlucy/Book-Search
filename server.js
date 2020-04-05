@@ -29,6 +29,9 @@ io.on("connection", function (socket) {
     console.log("deleted book: " + title);
     io.emit("show delete message", title);
   });
+  socket.on("ping", function () {
+    socket.emit("pong", "pong");
+  });
 });
 
 server.listen(PORT, function () {

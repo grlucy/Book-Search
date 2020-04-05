@@ -11,12 +11,18 @@ function Saved() {
   const [saved, setSaved] = useState([]);
   const [deleted, setDeleted] = useState("");
 
-  // Load all books and store them with setBooks
   useEffect(() => {
     loadSaved();
+    // Create socket.io activity to prevent timeout
+    setTimeout(function () {
+      socket.emit("ping", "ping");
+    }, 8000);
   }, []);
 
-  // Loads all books and sets them to books
+  socket.on("pong", function () {
+    return;
+  });
+
   function loadSaved() {
     SavedAPI.getBooks()
       .then((res) => setSaved(res.data))
