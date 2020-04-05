@@ -24,7 +24,10 @@ app.use(routes);
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks");
 
 io.on("connection", function (socket) {
-  console.log("a user connected");
+  socket.on("delete book", function (title) {
+    console.log("deleted book: " + title);
+    socket.emit("show delete message", title);
+  });
 });
 
 server.listen(PORT, function () {

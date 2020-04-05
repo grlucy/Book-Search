@@ -50,6 +50,7 @@ function Result(props) {
           {location.pathname === "/" ? (
             <button
               className="button save-btn is-light"
+              data-title={props.title}
               onClick={() => props.handleSave(bookData)}
             >
               <i className="fas fa-heart"></i>
@@ -57,7 +58,7 @@ function Result(props) {
           ) : (
             <button
               className="button delete-btn is-light"
-              onClick={() => props.handleDelete(props.id)}
+              onClick={() => props.handleDelete(props.id, props.title)}
             >
               <i className="fas fa-times"></i>
             </button>

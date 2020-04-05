@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
 import SavedAPI from "../../utils/SavedAPI";
 
 import Section from "../../components/Section/Section";
 import Result from "../../components/Result/Result";
 
+const socket = socketIOClient();
+
 function Saved() {
   const [saved, setSaved] = useState([]);
+  const [deleted, setDeleted] = useState("");
 
   // Load all books and store them with setBooks
   useEffect(() => {
@@ -19,7 +23,12 @@ function Saved() {
       .catch((err) => console.log(err));
   }
 
-  const handleDelete = (id) => {
+  socket.on("show delete message", function (title) {
+    setDeleted(title);
+  });
+
+  const handleDelete = (id, title) => {
+    socket.emit("delete book", title);
     SavedAPI.deleteBook(id)
       .then((res) => loadSaved())
       .catch((err) => console.log(err));
@@ -28,6 +37,7 @@ function Saved() {
   return (
     <>
       <Section sectionTitle="Saved Books">
+        <p className="has-text-danger">Deleted "{deleted}"!</p>
         {saved.length === 0 ? (
           <>
             <hr />
