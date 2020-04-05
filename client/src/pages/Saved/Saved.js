@@ -4,6 +4,7 @@ import SavedAPI from "../../utils/SavedAPI";
 
 import Section from "../../components/Section/Section";
 import Result from "../../components/Result/Result";
+import Notification from "../../components/Notification/Notification";
 
 const socket = socketIOClient();
 
@@ -41,14 +42,20 @@ function Saved() {
       .catch((err) => console.log(err));
   };
 
+  const handleNotificationClick = (e) => {
+    setDeleted("");
+  };
+
   return (
     <>
+      {deleted !== "" ? (
+        <Notification onClick={handleNotificationClick}>
+          Deleted "{deleted}"
+        </Notification>
+      ) : (
+        <></>
+      )}
       <Section sectionTitle="Saved Books">
-        {deleted !== "" ? (
-          <p className="has-text-danger">Deleted "{deleted}"!</p>
-        ) : (
-          <></>
-        )}
         {saved.length === 0 ? (
           <>
             <hr />
