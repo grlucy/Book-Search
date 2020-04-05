@@ -25,6 +25,7 @@ function Saved() {
 
   socket.on("show delete message", function (title) {
     setDeleted(title);
+    loadSaved();
   });
 
   const handleDelete = (id, title) => {
@@ -37,7 +38,11 @@ function Saved() {
   return (
     <>
       <Section sectionTitle="Saved Books">
-        <p className="has-text-danger">Deleted "{deleted}"!</p>
+        {deleted !== "" ? (
+          <p className="has-text-danger">Deleted "{deleted}"!</p>
+        ) : (
+          <></>
+        )}
         {saved.length === 0 ? (
           <>
             <hr />
