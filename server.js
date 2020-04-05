@@ -29,6 +29,10 @@ io.on("connection", function (socket) {
     console.log("deleted book: " + title);
     io.emit("show delete message", title);
   });
+  socket.on("save book", function (title) {
+    console.log("saved book: " + title);
+    io.emit("show save message", title);
+  });
   socket.on("ping", function () {
     socket.emit("pong", "pong");
   });

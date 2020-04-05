@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
 import API from "../../utils/API";
 
 import Section from "../../components/Section/Section";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import Result from "../../components/Result/Result";
+import Notification from "../../components/Notification/Notification";
+
 import SavedAPI from "../../utils/SavedAPI";
+
+const socket = socketIOClient();
 
 function Search() {
   const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
-  const [savedNum, setSavedNum] = useState(0);
+  const [recentSave, setRecentSave] = useState("");
+
+  useEffect(() => {
+    // Create socket.io activity to prevent timeout
+    setTimeout(function () {
+      socket.emit("ping", "ping");
+    }, 8000);
+  }, []);
+
+  socket.on("pong", function () {
+    return;
+  });
 
   useEffect(() => {
     if (!search.trim()) {
@@ -35,18 +51,29 @@ function Search() {
   };
 
   const handleSave = (bookData) => {
+    socket.emit("save book", bookData.title);
     SavedAPI.saveBook(bookData)
-      .then((res) => setSavedNum(savedNum + 1))
+      .then()
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    // TO DO: add UI alert when a book is saved
-    console.log(`savedNum is: ` + savedNum);
-  }, [savedNum]);
+  socket.on("show save message", function (title) {
+    setRecentSave(title);
+  });
+
+  const handleNotificationClick = (e) => {
+    setRecentSave("");
+  };
 
   return (
     <>
+      {recentSave !== "" ? (
+        <Notification onClick={handleNotificationClick}>
+          Saved "{recentSave}"
+        </Notification>
+      ) : (
+        <></>
+      )}
       <Section
         sectionTitle="Search Books"
         padClass={results.length === 0 ? "allPad" : "topPad"}
