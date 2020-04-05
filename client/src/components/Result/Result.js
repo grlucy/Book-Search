@@ -27,14 +27,20 @@ function Result(props) {
             <p>
               <strong>{props.title}</strong>
               <br />
-              Written by:{" "}
-              {props.authors.map((author) => (
-                <span key={author}>
+              {props.authors !== undefined && props.authors.length !== 0 ? (
+                <>
+                  <span>Written by: </span>
+                  {props.authors.map((author) => (
+                    <span key={author}>
+                      <br />
+                      {author}
+                    </span>
+                  ))}
                   <br />
-                  {author}
-                </span>
-              ))}
-              <br />
+                </>
+              ) : (
+                <></>
+              )}
               <br />
               {props.description}
             </p>
