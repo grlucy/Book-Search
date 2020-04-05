@@ -19,6 +19,12 @@ function Saved() {
       .catch((err) => console.log(err));
   }
 
+  const handleDelete = (id) => {
+    SavedAPI.deleteBook(id)
+      .then((res) => loadSaved())
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <Section sectionTitle="Saved Books">
@@ -33,11 +39,13 @@ function Saved() {
         {saved.map((book) => (
           <Result
             key={book._id}
+            id={book._id}
             title={book.title}
             authors={book.authors}
             description={book.description}
             link={book.link}
             coverImage={book.coverImage}
+            handleDelete={handleDelete}
           />
         ))}
       </Section>

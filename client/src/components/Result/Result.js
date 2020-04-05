@@ -5,6 +5,14 @@ import "./Result.css";
 function Result(props) {
   const location = useLocation();
 
+  const bookData = {
+    title: props.title,
+    authors: props.authors,
+    description: props.description,
+    coverImage: props.coverImage,
+    link: props.link,
+  };
+
   return (
     <>
       <hr />
@@ -40,11 +48,17 @@ function Result(props) {
           </a>
           <br />
           {location.pathname === "/" ? (
-            <button className="button save-btn is-light">
+            <button
+              className="button save-btn is-light"
+              onClick={() => props.handleSave(bookData)}
+            >
               <i className="fas fa-heart"></i>
             </button>
           ) : (
-            <button className="button delete-btn is-light">
+            <button
+              className="button delete-btn is-light"
+              onClick={() => props.handleDelete(props.id)}
+            >
               <i className="fas fa-times"></i>
             </button>
           )}

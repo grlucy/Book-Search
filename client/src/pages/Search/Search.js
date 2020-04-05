@@ -4,11 +4,13 @@ import API from "../../utils/API";
 import Section from "../../components/Section/Section";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import Result from "../../components/Result/Result";
+import SavedAPI from "../../utils/SavedAPI";
 
 function Search() {
   const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [savedNum, setSavedNum] = useState(0);
 
   useEffect(() => {
     if (!search.trim()) {
@@ -31,6 +33,17 @@ function Search() {
   const handleClick = (event) => {
     setSearch(inputValue);
   };
+
+  const handleSave = (bookData) => {
+    SavedAPI.saveBook(bookData)
+      .then((res) => setSavedNum(savedNum + 1))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    // TO DO: add UI alert when a book is saved
+    console.log(`savedNum is: ` + savedNum);
+  }, [savedNum]);
 
   return (
     <>
@@ -59,6 +72,7 @@ function Search() {
                   ? "https://via.placeholder.com/64x64.png?text=No+Image+Found"
                   : result.volumeInfo.imageLinks.thumbnail
               }
+              handleSave={handleSave}
             />
           ))}
         </Section>
