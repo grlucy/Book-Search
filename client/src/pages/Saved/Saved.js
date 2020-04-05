@@ -1,32 +1,60 @@
 import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
 import SavedAPI from "../../utils/SavedAPI";
 
 import Section from "../../components/Section/Section";
 import Result from "../../components/Result/Result";
+import Notification from "../../components/Notification/Notification";
+
+const socket = socketIOClient();
 
 function Saved() {
   const [saved, setSaved] = useState([]);
+  const [deleted, setDeleted] = useState("");
 
-  // Load all books and store them with setBooks
   useEffect(() => {
     loadSaved();
+    // Create socket.io activity to prevent timeout
+    setTimeout(function () {
+      socket.emit("ping", "ping");
+    }, 8000);
   }, []);
 
-  // Loads all books and sets them to books
+  socket.on("pong", function () {
+    return;
+  });
+
   function loadSaved() {
     SavedAPI.getBooks()
       .then((res) => setSaved(res.data))
       .catch((err) => console.log(err));
   }
 
-  const handleDelete = (id) => {
+  socket.on("show delete message", function (title) {
+    setDeleted(title);
+    loadSaved();
+  });
+
+  const handleDelete = (id, title) => {
+    socket.emit("delete book", title);
     SavedAPI.deleteBook(id)
       .then((res) => loadSaved())
       .catch((err) => console.log(err));
   };
 
+  const handleNotificationClick = (e) => {
+    setDeleted("");
+  };
+
   return (
     <>
+      {deleted !== "" ? (
+        <Notification onClick={handleNotificationClick}>
+          Deleted "{deleted}"
+        </Notification>
+      ) : (
+        <></>
+      )}
       <Section sectionTitle="Saved Books">
         {saved.length === 0 ? (
           <>

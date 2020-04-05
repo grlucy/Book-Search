@@ -27,14 +27,20 @@ function Result(props) {
             <p>
               <strong>{props.title}</strong>
               <br />
-              Written by:{" "}
-              {props.authors.map((author) => (
-                <span key={author}>
+              {props.authors !== undefined && props.authors.length !== 0 ? (
+                <>
+                  <span>Written by: </span>
+                  {props.authors.map((author) => (
+                    <span key={author}>
+                      <br />
+                      {author}
+                    </span>
+                  ))}
                   <br />
-                  {author}
-                </span>
-              ))}
-              <br />
+                </>
+              ) : (
+                <></>
+              )}
               <br />
               {props.description}
             </p>
@@ -50,6 +56,7 @@ function Result(props) {
           {location.pathname === "/" ? (
             <button
               className="button save-btn is-light"
+              data-title={props.title}
               onClick={() => props.handleSave(bookData)}
             >
               <i className="fas fa-heart"></i>
@@ -57,7 +64,7 @@ function Result(props) {
           ) : (
             <button
               className="button delete-btn is-light"
-              onClick={() => props.handleDelete(props.id)}
+              onClick={() => props.handleDelete(props.id, props.title)}
             >
               <i className="fas fa-times"></i>
             </button>
