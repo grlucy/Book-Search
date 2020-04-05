@@ -1,5 +1,7 @@
 const http = require("http");
 
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
@@ -21,7 +23,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(routes);
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks");
+mongoose.connect(process.env.MONGODB_URI || process.env.MLAB); // "mongodb://localhost/googlebooks"
 
 io.on("connection", function (socket) {
   console.log("a user connected");
